@@ -30,7 +30,7 @@ export const handler = async (
   const imagePath = event.rawPath;
   const query = new URLSearchParams(event.rawQueryString);
   const size = query.get("f") ?? "raw";
-  if (!["thumb", "placeholder", "scaled", "raw"].includes(size))
+  if (!["thumb", "placeholder", "preview", "scaled", "raw"].includes(size))
     return {
       statusCode: 400,
       body: `Invalid size: ${size}!`,
@@ -52,6 +52,9 @@ export const handler = async (
 
   if (size === "placeholder") {
     w = 16;
+    q = 2;
+  } else if (size === "preview") {
+    w = 64;
     q = 2;
   }
 
@@ -100,7 +103,7 @@ export const handler = async (
       `-strip`,
       resizedFile,
     ]);
-  } else if (size === "scaled") {
+  } else if (size === "scaled" || size === "preview") {
     await run("/opt/bin/convert", [
       originalFile,
       "-resize",
