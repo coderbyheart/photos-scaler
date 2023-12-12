@@ -4,7 +4,6 @@ import {
   aws_s3 as S3,
   Duration,
   CfnOutput,
-  aws_dynamodb as DynamoDB,
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { FunctionUrlAuthType } from "aws-cdk-lib/aws-lambda";
@@ -36,21 +35,7 @@ export class PhotosCDNStack extends Stack {
       objectOwnership: S3.ObjectOwnership.OBJECT_WRITER,
     });
 
-    // This stores metadata about the images
-    const db = new DynamoDB.Table(this, "db", {
-      billingMode: DynamoDB.BillingMode.PAY_PER_REQUEST,
-      partitionKey: {
-        name: "path",
-        type: DynamoDB.AttributeType.STRING,
-      },
-      sortKey: {
-        name: "format",
-        type: DynamoDB.AttributeType.STRING,
-      },
-      pointInTimeRecovery: false,
-      removalPolicy: RemovalPolicy.DESTROY,
-    });
-
+    // Layer that contains ImageMagick
     const layerVersion = new Lambda.LayerVersion(this, "imagemagick-layer", {
       code: Lambda.Code.fromBucket(
         S3.Bucket.fromBucketName(
@@ -64,7 +49,9 @@ export class PhotosCDNStack extends Stack {
       ),
     });
 
+    // The lambda that resizes photos
     const resizeImageFn = new Lambda.Function(this, "resizeImageFn", {
+      description: "Resize photos and store resized images",
       code: Lambda.Code.fromAsset(path.join(process.cwd(), "lambda.zip")),
       layers: [layerVersion],
       handler: "index.handler",
@@ -79,7 +66,6 @@ export class PhotosCDNStack extends Stack {
     });
     photosBucket.grantRead(resizeImageFn);
     resizedBucket.grantReadWrite(resizeImageFn);
-    db.grantFullAccess(resizeImageFn);
 
     const url = resizeImageFn.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
