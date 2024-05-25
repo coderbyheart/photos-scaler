@@ -11,7 +11,7 @@ import type {
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
-import { writeFile } from "node:fs/promises";
+import { rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path, { parse } from "node:path";
 
@@ -127,6 +127,10 @@ export const handler = async (
       },
     })
   );
+
+  // Delete local files
+  void rm(originalFile);
+  void rm(resizedFile);
 
   return redirect(resizedLocation);
 };
