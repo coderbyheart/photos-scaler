@@ -1,5 +1,5 @@
-import { PhotosCDNApp } from "./PhotosCDNApp";
-import { compile } from "./compile";
+import { PhotosCDNApp } from "./PhotosCDNApp.ts";
+import { compile } from "./compile.ts";
 
 await compile();
 

@@ -1,3 +1,3 @@
 {
-  "app": "npx tsx --no-warnings cdn.ts"
+  "app": "node --experimental-transform-types --no-warnings cdn.ts"
 }

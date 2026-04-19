@@ -19,7 +19,7 @@ export class PhotosCDNStack extends Stack {
     const photosBucket = S3.Bucket.fromBucketName(
       this,
       "photosBucket",
-      "photos.coderbyheart"
+      "photos.coderbyheart",
     );
 
     // This bucket stores the resized images
@@ -42,10 +42,10 @@ export class PhotosCDNStack extends Stack {
           this,
           "layerBucket",
           // Must be in same region as the stack
-          "imagemagick-layer-lambda-eu-central-1"
+          "imagemagick-layer-lambda-eu-central-1",
         ),
         // This is created using https://github.com/CyprusCodes/imagemagick-aws-lambda-2
-        "image-magick-layer.zip"
+        "image-magick-layer.zip",
       ),
     });
 
@@ -55,7 +55,7 @@ export class PhotosCDNStack extends Stack {
       code: Lambda.Code.fromAsset(path.join(process.cwd(), "lambda.zip")),
       layers: [layerVersion],
       handler: "index.handler",
-      runtime: Lambda.Runtime.NODEJS_20_X,
+      runtime: Lambda.Runtime.NODEJS_24_X,
       timeout: Duration.seconds(30),
       memorySize: 1792,
       logRetention: RetentionDays.ONE_DAY,
