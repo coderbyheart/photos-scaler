@@ -7,7 +7,7 @@ import {
   RemovalPolicy,
 } from "aws-cdk-lib";
 import { FunctionUrlAuthType } from "aws-cdk-lib/aws-lambda";
-import { RetentionDays } from "aws-cdk-lib/aws-logs";
+import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import type { Construct } from "constructs";
 import path from "node:path";
 
@@ -49,6 +49,11 @@ export class PhotosCDNStack extends Stack {
       ),
     });
 
+    const resizeImageFnLogGroup = new LogGroup(this, "resizeImageFnLogGroup", {
+      retention: RetentionDays.ONE_DAY,
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
+
     // The lambda that resizes photos
     const resizeImageFn = new Lambda.Function(this, "resizeImageFn", {
       description: "Resize photos and store resized images",
@@ -58,7 +63,7 @@ export class PhotosCDNStack extends Stack {
       runtime: Lambda.Runtime.NODEJS_24_X,
       timeout: Duration.seconds(30),
       memorySize: 1792,
-      logRetention: RetentionDays.ONE_DAY,
+      logGroup: resizeImageFnLogGroup,
       environment: {
         PHOTOS_BUCKET: photosBucket.bucketName,
         RESIZED_BUCKET: resizedBucket.bucketName,

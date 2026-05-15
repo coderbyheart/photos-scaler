@@ -89,9 +89,11 @@ export const handler = async (
   ).toString("ascii");
   const [, type, dimensions, , colorDepth, colorFormat] =
     originalInfo.split(" "); // /tmp/f5bb4094-29eb-44ff-9c29-feaf5d2ce7d4 JPEG 3008x4000 3008x4000+0+0 8-bit sRGB 2.49426MiB 0.010u 0:00.004
+  // For animated GIFs, operate on the first frame only so the output is a still image.
+  const inputFile = type === "GIF" ? `${originalFile}[0]` : originalFile;
   if (size === "thumb" || size === "placeholder") {
     await run("/opt/bin/convert", [
-      originalFile,
+      inputFile,
       "-thumbnail",
       `${w}x${w}^`,
       `-gravity`,
@@ -105,7 +107,7 @@ export const handler = async (
     ]);
   } else if (size === "scaled" || size === "preview") {
     await run("/opt/bin/convert", [
-      originalFile,
+      inputFile,
       "-resize",
       `${w}x`,
       "-quality",
