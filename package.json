@@ -23,7 +23,7 @@
     "@typescript/native-preview": "7.0.0-dev.20260521.1",
     "aws-cdk": "2.1124.1",
     "aws-cdk-lib": "2.256.1",
-    "cdk": "2.1122.0",
+    "cdk": "2.1124.1",
     "constructs": "10.6.0",
     "typescript": "6.0.3",
     "yazl": "3.3.1"
