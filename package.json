@@ -15,7 +15,7 @@
     "npm": ">=11"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "3.1059.0",
+    "@aws-sdk/client-s3": "3.1060.0",
     "@swc/core": "1.15.40",
     "@types/aws-lambda": "8.10.161",
     "@types/node": "25.9.1",
