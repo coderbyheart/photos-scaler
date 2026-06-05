@@ -18,7 +18,7 @@
     "@aws-sdk/client-s3": "3.1063.0",
     "@swc/core": "1.15.40",
     "@types/aws-lambda": "8.10.161",
-    "@types/node": "25.9.1",
+    "@types/node": "25.9.2",
     "@types/yazl": "3.3.1",
     "@typescript/native-preview": "7.0.0-dev.20260605.1",
     "aws-cdk": "2.1126.0",
