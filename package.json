@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "3.1073.0",
-    "@swc/core": "1.15.41",
+    "@swc/core": "1.15.43",
     "@types/aws-lambda": "8.10.162",
     "@types/node": "25.9.4",
     "@types/yazl": "3.3.1",
