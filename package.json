@@ -20,7 +20,7 @@
     "@types/aws-lambda": "8.10.162",
     "@types/node": "25.9.4",
     "@types/yazl": "3.3.1",
-    "@typescript/native-preview": "7.0.0-dev.20260705.1",
+    "@typescript/native-preview": "7.0.0-dev.20260706.1",
     "aws-cdk": "2.1129.0",
     "aws-cdk-lib": "2.261.0",
     "cdk": "2.1129.0",
