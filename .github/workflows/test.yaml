@@ -36,7 +36,7 @@ jobs:
 
     env:
       AWS_REGION: ${{ vars.CI__AWS_REGION }}
-      IMAGEMAGICK_LAYER_BUCKET: imagemagick-layer-lambda-${{ vars.CI__AWS_REGION }}
+      IMAGEMAGICK_LAYER_BUCKET: ${{ secrets.CI__IMAGEMAGICK_LAYER_BUCKET }}
       # Deploy a stack of its own, so it neither touches production, nor a
       # concurrent run of this workflow
       STACK_NAME: photos-cdn-e2e-${{ github.run_id }}-${{ github.run_attempt }}
