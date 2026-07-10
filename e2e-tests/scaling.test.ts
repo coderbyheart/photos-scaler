@@ -5,7 +5,7 @@ import {
 } from "@aws-sdk/client-s3";
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { before, describe, it } from "node:test";
 import { setTimeout as delay } from "node:timers/promises";
@@ -43,6 +43,13 @@ if (
   );
 
 const s3 = new S3Client({});
+
+/**
+ * Every image the CDN served is kept here, so a failed assertion can be
+ * inspected: the workflow uploads this directory as an artifact.
+ */
+const resizedDir = path.join(import.meta.dirname, "resized");
+await mkdir(resizedDir, { recursive: true });
 
 /**
  * Every run uploads its fixtures under a fresh prefix, so a re-run against an
@@ -126,7 +133,13 @@ const variant = async (
   assert.equal(res.status, 301);
   const location = res.headers.get("location");
   assert.equal(location, resizedLocation(fixture, sizeId));
-  return download(location as string);
+  const image = await download(location as string);
+  // The key is unique per fixture and variant, the prefix only separates runs
+  await writeFile(
+    path.join(resizedDir, path.basename(resizedKey(fixture, sizeId))),
+    image,
+  );
+  return image;
 };
 
 /**

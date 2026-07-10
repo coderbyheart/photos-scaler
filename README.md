@@ -43,6 +43,10 @@ build.
 Any stack that is not named `photos-cdn` creates its own photos bucket, so the
 tests never touch the production photos.
 
+Every image the CDN served is written to `e2e-tests/resized/`. The workflow
+uploads it as the `resized-images` artifact, also when the tests fail, so a
+broken variant can be inspected.
+
 ```bash
 export STACK_NAME=photos-cdn-e2e-$USER
 export IMAGEMAGICK_LAYER_BUCKET=<the bucket that holds image-magick-layer.zip>
