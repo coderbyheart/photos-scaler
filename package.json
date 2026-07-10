@@ -12,7 +12,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=24 <25",
-    "npm": ">=11.7.0 <12"
+    "npm": ">=11.7.0 <13"
   },
   "scripts": {
     "test:e2e": "node --test --test-timeout 60000 \"e2e-tests/**/*.test.ts\""
