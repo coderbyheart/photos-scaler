@@ -1,3 +1,4 @@
 cdk.out/
 node_modules/
 lambda.zip
+stack-outputs.json

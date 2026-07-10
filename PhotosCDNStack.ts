@@ -12,20 +12,38 @@ import type { Construct } from "constructs";
 import path from "node:path";
 
 export class PhotosCDNStack extends Stack {
-  constructor(parent: Construct) {
-    super(parent, "photos-cdn");
+  constructor(
+    parent: Construct,
+    {
+      stackName,
+      photosBucketName,
+      imageMagickLayerBucketName,
+    }: {
+      stackName: string;
+      /**
+       * The bucket that serves the images. If undefined, the stack creates one,
+       * which is what the end-to-end tests use to upload their fixtures to.
+       */
+      photosBucketName?: string;
+      imageMagickLayerBucketName: string;
+    },
+  ) {
+    super(parent, stackName);
 
     // This bucket serves the images
-    const photosBucket = S3.Bucket.fromBucketName(
-      this,
-      "photosBucket",
-      "photos.coderbyheart",
-    );
+    const photosBucket =
+      photosBucketName !== undefined
+        ? S3.Bucket.fromBucketName(this, "photosBucket", photosBucketName)
+        : new S3.Bucket(this, "photosBucket", {
+            removalPolicy: RemovalPolicy.DESTROY,
+            autoDeleteObjects: true,
+          });
 
     // This bucket stores the resized images
     const resizedBucket = new S3.Bucket(this, "resizedBucket", {
       publicReadAccess: true,
       removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
       blockPublicAccess: {
         blockPublicAcls: false,
         ignorePublicAcls: false,
@@ -42,7 +60,7 @@ export class PhotosCDNStack extends Stack {
           this,
           "layerBucket",
           // Must be in same region as the stack
-          "imagemagick-layer-lambda-eu-central-1",
+          imageMagickLayerBucketName,
         ),
         // This is created using https://github.com/CyprusCodes/imagemagick-aws-lambda-2
         "image-magick-layer.zip",
@@ -78,6 +96,14 @@ export class PhotosCDNStack extends Stack {
     new CfnOutput(this, "url", {
       value: url.url,
       exportName: `${this.stackName}:url`,
+    });
+    new CfnOutput(this, "photosBucketName", {
+      value: photosBucket.bucketName,
+      exportName: `${this.stackName}:photosBucketName`,
+    });
+    new CfnOutput(this, "resizedBucketName", {
+      value: resizedBucket.bucketName,
+      exportName: `${this.stackName}:resizedBucketName`,
     });
   }
 }
