@@ -33,6 +33,11 @@
         "optionalDependencies",
         "peerDependencies"
       ]
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
     }
   ]
 }
