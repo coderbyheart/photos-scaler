@@ -11,7 +11,7 @@
   "author": "Markus Tacker <m@coderbyheart.com> | https://coderbyheart.com",
   "license": "MIT",
   "engines": {
-    "node": ">=24 <25",
+    "node": ">=24.18.0 <25",
     "npm": ">=11.7.0 <13"
   },
   "scripts": {
