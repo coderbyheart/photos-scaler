@@ -24,7 +24,7 @@
     "@types/node": "26.1.2",
     "@types/yazl": "3.3.1",
     "aws-cdk": "2.1134.0",
-    "aws-cdk-lib": "2.262.2",
+    "aws-cdk-lib": "2.263.0",
     "cdk": "2.1134.0",
     "constructs": "10.8.0",
     "typescript": "7.0.2",
