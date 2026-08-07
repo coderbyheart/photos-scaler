@@ -18,6 +18,12 @@ resized bucket without scaling again.
 `w` is rounded down to a multiple of 250 and defaults to 250, `q` (1-10) sets
 the WebP quality and defaults to 6.
 
+## Node & NPM
+
+This project requires Node.js `>=24.18.1 <25` and npm `>=12.0.2 <13`, enforced
+via `check-node-version` on `npm install` and `npm ci`. The workflow installs the
+npm version from `engines.npm`, so `package.json` is the single source of truth.
+
 ## Deploy
 
 ```bash
