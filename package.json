@@ -18,7 +18,7 @@
     "test:e2e": "node --test --test-timeout 60000 \"e2e-tests/**/*.test.ts\""
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "3.1105.0",
+    "@aws-sdk/client-s3": "3.1106.0",
     "@swc/core": "1.15.47",
     "@types/aws-lambda": "8.10.162",
     "@types/node": "26.1.2",
