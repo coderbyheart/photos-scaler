@@ -22,7 +22,7 @@
     "@aws-sdk/client-s3": "3.1145.0",
     "@swc/core": "1.16.13",
     "@types/aws-lambda": "8.10.164",
-    "@types/node": "26.6.3",
+    "@types/node": "26.6.4",
     "@types/yazl": "3.3.1",
     "aws-cdk": "2.1144.0",
     "aws-cdk-lib": "2.272.0",
